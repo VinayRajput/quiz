@@ -1,10 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {QuizService} from '../quiz.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-result',
-  templateUrl: './result.component.html'
+  templateUrl: './result.component.html',
+  animations: [
+    trigger('fade', [
+      state('void', style({opacity: 0})),
+      transition('void => *', [
+        style({opacity: 0}),
+        animate(400)
+      ]),
+      transition('* => void', [
+        animate(100)
+      ])
+    ])
+  ]
 })
 export class ResultComponent implements OnInit {
 

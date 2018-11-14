@@ -15,26 +15,30 @@ export class QuizService {
     quizStarted: boolean = false;
     quizMaxTimeInSec = 5;
     retry: any;
-    quizName= 'Trivia Quiz';
+    loading= true;
+    quizName = 'Trivia Quiz';
 
     constructor(private http: HttpClient) {
     }
 
     saveParticipant(name: string, email: string, phone: number) {
+        this.loading = true;
         const body = {
             Name: name,
             Email: email,
-            Phone : phone
+            Phone: phone
         };
 
         localStorage.clear();
         localStorage.setItem('participant', JSON.stringify(body));
         this.quizStarted = true;
+
     }
 
-    showTimeElapsed(){
-        return Math.floor(this.seconds % 60) +'s' ;
+    showTimeElapsed() {
+        return Math.floor(this.seconds % 60) + 's';
     }
+
     /*Angular version of getQuestions*/
     /*getQuestions() {
         return this.http.get(this.rootUri);
@@ -47,11 +51,10 @@ export class QuizService {
                 //'Content-Type': 'application/json'
             })
         });
-
-        return fetch(request).then( response => response.text());
+        return fetch(request).then(response => response.text());
     }
 
-    getParticipantName(){
+    getParticipantName() {
         const userDtls = JSON.parse(localStorage.getItem('participant'));
         return userDtls.Name;
     }

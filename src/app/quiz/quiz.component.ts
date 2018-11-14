@@ -1,10 +1,20 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizService} from '../quiz.service';
 import {Router} from '@angular/router';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-quiz',
-  templateUrl: './quiz.component.html'
+  templateUrl: './quiz.component.html',
+  animations: [
+    trigger('fade', [
+      state('void', style({opacity: 0})),
+      transition('void => *', [
+        style({opacity: 0}),
+        animate(400)
+      ])
+    ])
+  ]
 })
 export class QuizComponent implements OnInit {
 
@@ -60,6 +70,7 @@ export class QuizComponent implements OnInit {
 
 
   ngOnInit() {
+    this.quizService.loading = true;
     this.quizService.seconds = 0;
     this.quizService.currentQs = 0;
     this.quizService.correctAnswer = 0;
@@ -92,17 +103,21 @@ export class QuizComponent implements OnInit {
         };
         this.quizService.questions = JSON.parse(response).results;
         this.quizService.questions.map(callbk.bind(null, this));
+        this.quizService.loading = false;
         this.startTimer();
 
       })
       .catch(err => {
           this.loadingError = true;
+          this.quizService.loading = false
           this.errorMessage = "Oops! Seems like some network problem, please try after some time.";
           return;
       });
   }
 
   retry() {
+    this.loadingError = false;
+    this.quizService.loading = true;
     this.startQuiz();
   }
 
