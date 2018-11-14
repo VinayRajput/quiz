@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="row" *ngIf="quizService.questions">
+  <div class="col s8 offset-s2 quizQuestions">
+    <div class="card indigo lighten-5" *ngIf="quizService.currentQs < quizService.questions.length">
+      <div class="card-content text-darken-1">
+        <span class="card-title">Question {{quizService.currentQs+1}}</span>
+
+        <p>{{quizService.questions[quizService.currentQs].question}}</p>
+      </div>
+      <div class="card-action blue-grey lighten-5 text-darken-1">
+        <ul>
+          <li *ngFor="let option of quizService.questions[quizService.currentQs]['options']">
+            <label><input type="radio" name="answer"
+                          (change)="answer(quizService.currentQs,option)"/><span>{{option}}</span></label>
+          </li>
+        </ul>
+
+      </div>
+      <div class="card-action text-right">
+        <span> {{ quizService.showTimeElapsed() }}</span>
+      </div>
+    </div>
+    <div class="card blue-grey darken-2" *ngIf="quizService.currentQs >= quizService.questions.length">
+      <div class="card-content text-darken-1">
+        <span class="card-title">Congratulation.</span>
+      </div>
+      <div class="card-action">
+        You have answered all question.
+      </div>
+    </div>
+  </div>
+</div>
