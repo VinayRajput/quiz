@@ -14,7 +14,8 @@ export class QuizService {
     correctAnswer: number;
     quizStarted: boolean = false;
     quizMaxTimeInSec = 5;
-    quizName= 'Trivia Quiz';
+    retry: any;
+    //quizName= 'Trivia Quiz';
 
     constructor(private http: HttpClient) {
     }
@@ -28,21 +29,27 @@ export class QuizService {
 
         localStorage.clear();
         localStorage.setItem('participant', JSON.stringify(body));
-
         this.quizStarted = true;
-
-        return this.getQuestions();
     }
 
     showTimeElapsed(){
         return Math.floor(this.seconds % 60) +'s' ;
     }
-
-    getQuestions() {
+    /*Angular version of getQuestions*/
+    /*getQuestions() {
         return this.http.get(this.rootUri);
+    }*/
+
+    /*ES6 version of getQuestions*/
+    getQuestions() {
+        const request = new Request(this.rootUri, {
+            headers: new Headers({
+                //'Content-Type': 'application/json'
+            })
+        });
+
+        return fetch(request).then( response => response.text());
     }
-
-
 
     getParticipantName(){
         const userDtls = JSON.parse(localStorage.getItem('participant'));

@@ -1,7 +1,7 @@
 <app-navbar></app-navbar>
 
-<div class="row" *ngIf="quizService.questions">
-  <div class="col s8 offset-s2 quizQuestions">
+<div class="row" *ngIf="quizService.questions && loadingError == false">
+  <div class="col s12 m8 xl6 offset-m2 offset-xl3 quizQuestions">
     <div class="card indigo lighten-5" *ngIf="quizService.currentQs < quizService.questions.length">
       <div class="card-content text-darken-1">
         <span class="card-title">Question {{quizService.currentQs+1}}</span>
@@ -11,8 +11,7 @@
       <div class="card-action blue-grey lighten-5 text-darken-1">
         <ul>
           <li *ngFor="let option of quizService.questions[quizService.currentQs]['options']">
-            <label><input type="radio" name="answer"
-                          (change)="answer(quizService.currentQs,option)"/><span>{{option}}</span></label>
+            <label><input type="radio" name="answer" (change)="answer(quizService.currentQs,option)"/><span>{{option}}</span></label>
           </li>
         </ul>
 
@@ -27,6 +26,19 @@
       </div>
       <div class="card-action">
         You have answered all question.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="loadingError == true">
+  <div class="col s12 m8 xl6 offset-m2 offset-xl3 quizQuestions">
+    <div class="card indigo lighten-5">
+      <div class="card-content text-darken-1">
+        <span class="card-title">Oops!</span>
+        <p>{{errorMessage}}</p>
+        <br/>
+        <button (click)="retry()" class="btn-large btn-submit">Retry!</button>
       </div>
     </div>
   </div>
