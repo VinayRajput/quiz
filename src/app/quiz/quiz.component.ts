@@ -4,14 +4,13 @@ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-quiz',
-  templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.scss']
+  templateUrl: './quiz.component.html'
 })
 export class QuizComponent implements OnInit {
 
   loadingError = false;
   errorMessage: string;
-  constructor(private route: Router, private quizService: QuizService) {
+  constructor(private route: Router, public quizService: QuizService) {
   }
 
   ramdomJoininArray(item: any, index: any) {

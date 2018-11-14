@@ -15,7 +15,7 @@ export class QuizService {
     quizStarted: boolean = false;
     quizMaxTimeInSec = 5;
     retry: any;
-    //quizName= 'Trivia Quiz';
+    quizName= 'Trivia Quiz';
 
     constructor(private http: HttpClient) {
     }
