@@ -38,7 +38,7 @@
         <span class="card-title">Oops!</span>
         <p>{{errorMessage}}</p>
         <br/>
-        <button (click)="retry()" class="btn-large btn-submit">Retry!</button>
+        <button (click)="retry()" class="btn-large btn-submit" *ngIf="quizService.questions > 0">Retry!</button>
       </div>
     </div>
   </div>

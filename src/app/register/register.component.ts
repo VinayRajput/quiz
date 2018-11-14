@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
 
   OnSubmit(formObj: any) {
     this.formObj = formObj;
-    this.quizService.saveParticipant(formObj.Name, formObj.Email, formObj.Phone);
+    this.quizService.saveParticipant(formObj.Name, formObj.Email, formObj.Phone, formObj.Category);
     this.goToQuiz();
   }
 

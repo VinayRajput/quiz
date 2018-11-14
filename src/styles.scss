@@ -5,14 +5,18 @@ input.ng-dirty.ng-invalid {
   border-bottom: 1px solid #ff0000;
 }
 
-nav{
-  margin-bottom:20px;
+nav {
+  margin-bottom: 20px;
 }
+
 #registerForm {
-  input {
+  input,
+  select {
     background: #fafafa;
     padding: 3px 5px;
     border-radius: 3px;
+    display: block;
+    color: #333333;
   }
 
   label {
@@ -21,7 +25,6 @@ nav{
 
   .input-field > {
     input[type]:-webkit-autofill:not(.browser-default):not([type="search"]) + label,
-
     input[type=date]:not(.browser-default) + label,
     input[type=time]:not(.browser-default) + label {
       -webkit-transform: translateY(-20px) scale(0.8);
@@ -46,10 +49,10 @@ nav{
   }
 
 }
-.text-right{
-  text-align:right;
-}
 
+.text-right {
+  text-align: right;
+}
 
 .lds-ring {
   display: inline-block;
@@ -60,6 +63,7 @@ nav{
   top: 40%;
   z-index: 10;
 }
+
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -72,15 +76,19 @@ nav{
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #fdd transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }
+
 .lds-ring div:nth-child(2) {
   animation-delay: -0.3s;
 }
+
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);

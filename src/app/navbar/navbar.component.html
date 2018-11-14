@@ -1,8 +1,8 @@
 <nav>
   <div class="nav-wrapper" @fade>
     <a href="#" class="brand-logo center">{{ quizService.quizName }}</a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a (click)="SignOut()">Sign Out</a></li>
+    <ul id="nav-mobile" class="right">
+      <li><a (click)="quizService.SignOut()">Sign Out</a></li>
     </ul>
   </div>
 </nav>

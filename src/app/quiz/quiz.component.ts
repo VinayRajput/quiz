@@ -20,6 +20,7 @@ export class QuizComponent implements OnInit {
 
   loadingError = false;
   errorMessage: string;
+
   constructor(private route: Router, public quizService: QuizService) {
   }
 
@@ -102,16 +103,25 @@ export class QuizComponent implements OnInit {
           item['options'] = obj.ramdomJoininArray(item);
         };
         this.quizService.questions = JSON.parse(response).results;
-        this.quizService.questions.map(callbk.bind(null, this));
-        this.quizService.loading = false;
-        this.startTimer();
+        if (this.quizService.questions.length > 0) {
+          this.quizService.questions.map(callbk.bind(null, this));
+          this.quizService.loading = false;
+          this.startTimer();
+        } else {
+          throw new Error('No Question');
+        }
 
       })
       .catch(err => {
-          this.loadingError = true;
-          this.quizService.loading = false
-          this.errorMessage = "Oops! Seems like some network problem, please try after some time.";
+        this.loadingError = true;
+        this.quizService.loading = false;
+        if(err.message === 'No Question') {
+          this.errorMessage = 'Oops! No Question found, Sign Out and try any other category';
           return;
+        } else {
+          this.errorMessage = 'Oops! Seems like some network problem, please try after some time.';
+          return;
+        }
       });
   }
 
@@ -120,5 +130,7 @@ export class QuizComponent implements OnInit {
     this.quizService.loading = true;
     this.startQuiz();
   }
+
+
 
 }

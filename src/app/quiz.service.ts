@@ -1,36 +1,40 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class QuizService {
-    readonly rootUri = 'https://opentdb.com/api.php?amount=100&category=9&difficulty=medium&type=multiple';
+    readonly rootUri = 'https://opentdb.com/api.php?amount=100&difficulty=medium&type=multiple';
 
     questions: any[];
     seconds: number;
     timer;
     currentQs: number;
     correctAnswer: number;
-    quizStarted: boolean = false;
-    quizMaxTimeInSec = 5;
+    quizStarted = false;
+    quizMaxTimeInSec = 60;
     retry: any;
-    loading= true;
+    loading = true;
+    category = 'Any';
     quizName = 'Trivia Quiz';
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private route: Router) {
     }
 
-    saveParticipant(name: string, email: string, phone: number) {
+    saveParticipant(name: string, email: string, phone: number, category: string) {
         this.loading = true;
         const body = {
             Name: name,
             Email: email,
-            Phone: phone
+            Phone: phone,
+            Category: category
         };
 
         localStorage.clear();
         localStorage.setItem('participant', JSON.stringify(body));
+        this.category = category;
         this.quizStarted = true;
 
     }
@@ -46,7 +50,7 @@ export class QuizService {
 
     /*ES6 version of getQuestions*/
     getQuestions() {
-        const request = new Request(this.rootUri, {
+        const request = new Request(this.rootUri + '&category=' + this.category, {
             headers: new Headers({
                 //'Content-Type': 'application/json'
             })
@@ -57,6 +61,12 @@ export class QuizService {
     getParticipantName() {
         const userDtls = JSON.parse(localStorage.getItem('participant'));
         return userDtls.Name;
+    }
+
+    SignOut(){
+        localStorage.clear();
+        clearInterval(this.timer);
+        this.route.navigate(['/register']);
     }
 
 }
